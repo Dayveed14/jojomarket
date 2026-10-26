@@ -1,0 +1,13 @@
+{
+  "name": "Jojo Market",
+  "short_name": "Jojo Market",
+  "description": "Your trusted market shopper",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDF9EE",
+  "theme_color": "#065E2F",
+  "icons": [
+    { "src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
