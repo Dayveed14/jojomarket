@@ -6,6 +6,7 @@ import App from './App';
 import ScrollToTop from './components/ScrollToTop';
 import { AuthProvider } from './context/AuthContext';
 import './styles/global.css';
+import './styles/kitchen.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

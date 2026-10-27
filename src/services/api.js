@@ -190,3 +190,38 @@ export const adminApi = {
   purchases: (params) => api(`/admin/purchases${qs(params)}`),
   auditLog: (params) => api(`/admin/audit-log${qs(params)}`),
 };
+
+export const kitchenApi = {
+  menu: () => api('/kitchen/menu', { auth: false }),
+  quote: (body) => api('/kitchen/quote', { method: 'POST', body }),
+  create: (body) => api('/kitchen/orders', { method: 'POST', body }),
+  list: (scope) => api(`/kitchen/orders${qs({ scope })}`),
+  get: (ref) => api(`/kitchen/orders/${ref}`),
+  cancel: (ref, reason) => api(`/kitchen/orders/${ref}/cancel`, { method: 'POST', body: { reason } }),
+  payOnline: (ref) => api(`/kitchen/orders/${ref}/pay/online`, { method: 'POST' }),
+  payManual: (ref, payerNote) => api(`/kitchen/orders/${ref}/pay/manual`, { method: 'POST', body: { payerNote } }),
+  payCredit: (ref) => api(`/kitchen/orders/${ref}/pay/credit`, { method: 'POST' }),
+};
+
+export const adminKitchenApi = {
+  orders: (params) => api(`/admin/kitchen/orders${qs(params)}`),
+  order: (ref) => api(`/admin/kitchen/orders/${ref}`),
+  approve: (ref, body) => api(`/admin/kitchen/orders/${ref}/approve`, { method: 'POST', body }),
+  decline: (ref, reason) => api(`/admin/kitchen/orders/${ref}/decline`, { method: 'POST', body: { reason } }),
+  advance: (ref, to) => api(`/admin/kitchen/orders/${ref}/advance`, { method: 'POST', body: { to } }),
+  cancel: (ref, body) => api(`/admin/kitchen/orders/${ref}/cancel`, { method: 'POST', body }),
+  refund: (ref, body) => api(`/admin/kitchen/orders/${ref}/refund`, { method: 'POST', body }),
+  confirmPayment: (ref, id) => api(`/admin/kitchen/orders/${ref}/payments/${id}/confirm`, { method: 'POST' }),
+  rejectPayment: (ref, id, reason) => api(`/admin/kitchen/orders/${ref}/payments/${id}/reject`, { method: 'POST', body: { reason } }),
+  sheet: (date) => api(`/admin/kitchen/sheet${qs({ date })}`),
+  calendar: () => api('/admin/kitchen/calendar'),
+  setOverride: (body) => api('/admin/kitchen/calendar', { method: 'POST', body }),
+  menu: () => api('/admin/kitchen/menu'),
+  saveMeal: (id, body) => api(id ? `/admin/kitchen/menu/${id}` : '/admin/kitchen/menu', { method: id ? 'PUT' : 'POST', body }),
+  uploadPhoto: (id, file) => {
+    const fd = new FormData();
+    fd.append('photo', file);
+    return api(`/admin/kitchen/menu/${id}/photo`, { method: 'POST', body: fd });
+  },
+  removePhoto: (id) => api(`/admin/kitchen/menu/${id}/photo`, { method: 'DELETE' }),
+};

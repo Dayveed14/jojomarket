@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react';
 const PUBLIC_ROUTES = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
   { path: '/markets', priority: '0.8', changefreq: 'weekly' },
+  { path: '/kitchen', priority: '0.9', changefreq: 'weekly' },
   { path: '/register', priority: '0.6', changefreq: 'monthly' },
   { path: '/privacy', priority: '0.3', changefreq: 'yearly' },
   { path: '/terms', priority: '0.3', changefreq: 'yearly' },

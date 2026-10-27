@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { DishArt } from '../../components/kitchen/DishArt';
 import Seo from '../../components/Seo';
 import { SITE } from '../../config/site';
 import { homeFor, useAuth } from '../../context/AuthContext';
@@ -268,6 +269,26 @@ export default function Home() {
       </section>
 
       {/* BUDGET EXPLAINER */}
+      <section className="section k-home">
+        <div className="container k-home__grid">
+          <div className="k-home__art" aria-hidden="true">
+            <DishArt dish="egusi" className="k-home__a" />
+            <DishArt dish="jollof" steam className="k-home__b" />
+            <DishArt dish="dodo" className="k-home__c" />
+          </div>
+          <div>
+            <p className="k-eyebrow">New · Jojo’s Kitchen</p>
+            <h2 className="section__title" style={{ color: '#fff' }}>Rather have it cooked?</h2>
+            <p className="k-home__lead">Jojo also cooks on demand — smoky jollof, egusi, efo riro, ofada, pepper soup, small chops and party trays.
+              Made fresh in a clean, private kitchen, exactly your way: no garlic, no ginger, less oil, mild pepper. Delivered across Lagos.</p>
+            <div className="hero__ctas">
+              <Link to="/kitchen" className="btn btn--accent btn--lg">See the menu</Link>
+              <Link to="/kitchen#menu" className="btn btn--lg k-btn-light">Party orders</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="section section--green">
         <div className="container budget">
           <div>

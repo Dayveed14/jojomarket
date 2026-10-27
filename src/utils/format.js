@@ -30,6 +30,8 @@ export const STATUS_TONE = {
   submitted: 'gold', awaiting_customer_approval: 'orange', awaiting_payment: 'orange', paid: 'green',
   shopping_in_progress: 'green', awaiting_customer_decision: 'orange', ready_for_delivery: 'green',
   completed: 'ink', declined: 'red', cancelled: 'muted', expired: 'muted',
+  // Jojo's Kitchen
+  express_requested: 'gold', confirmed: 'green', preparing: 'green', cooking: 'orange', out_for_delivery: 'green', delivered: 'ink',
 };
 
 export const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;

@@ -11,6 +11,7 @@ import { NotFound, PolicyPage } from './pages/public/Misc';
 
 // Signed-in areas are split into their own chunks so the public homepage stays light.
 const MarketsPage = lazy(() => import('./pages/public/MarketsPage'));
+const Kitchen = lazy(() => import('./pages/public/Kitchen'));
 const AppLayout = lazy(() => import('./layouts/AppLayout'));
 const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
 const ResetPassword = lazy(() => import('./pages/auth/ResetPassword'));
@@ -27,6 +28,9 @@ const ListEdit = lazy(() => import('./pages/customer/Lists').then((m) => ({ defa
 const Purchases = lazy(() => import('./pages/customer/Purchases'));
 const Restocking = lazy(() => import('./pages/customer/Restocking'));
 const Settings = lazy(() => import('./pages/customer/Settings'));
+const KitchenOrders = lazy(() => import('./pages/customer/kitchen/KitchenOrders'));
+const KitchenNew = lazy(() => import('./pages/customer/kitchen/KitchenNew'));
+const KitchenOrder = lazy(() => import('./pages/customer/kitchen/KitchenOrder'));
 
 const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
 const AdminBookings = lazy(() => import('./pages/admin/Bookings'));
@@ -39,6 +43,10 @@ const Markets = lazy(() => import('./pages/admin/Markets'));
 const ServiceSettings = lazy(() => import('./pages/admin/ServiceSettings'));
 const Payments = lazy(() => import('./pages/admin/Payments'));
 const AuditLog = lazy(() => import('./pages/admin/AuditLog'));
+const KitchenQueue = lazy(() => import('./pages/admin/kitchen/KitchenQueue'));
+const KitchenOrderAdmin = lazy(() => import('./pages/admin/kitchen/KitchenOrderAdmin'));
+const KitchenMenu = lazy(() => import('./pages/admin/kitchen/KitchenMenu'));
+const KitchenSetup = lazy(() => import('./pages/admin/kitchen/KitchenSetup'));
 
 export default function App() {
   return (
@@ -47,6 +55,7 @@ export default function App() {
         <Route element={<PublicLayout />}>
           <Route index element={<Home />} />
           <Route path="markets" element={<MarketsPage />} />
+          <Route path="kitchen" element={<Kitchen />} />
           <Route path="privacy" element={<PolicyPage kind="privacy" />} />
           <Route path="terms" element={<PolicyPage kind="terms" />} />
         </Route>
@@ -79,6 +88,9 @@ export default function App() {
             <Route path="lists/:id" element={<ListEdit />} />
             <Route path="purchases" element={<Purchases />} />
             <Route path="restocking" element={<Restocking />} />
+            <Route path="kitchen" element={<KitchenOrders />} />
+            <Route path="kitchen/new" element={<KitchenNew />} />
+            <Route path="kitchen/orders/:reference" element={<KitchenOrder />} />
             <Route path="settings" element={<Settings />} />
             <Route path="*" element={<NotFound />} />
           </Route>
@@ -97,6 +109,10 @@ export default function App() {
             <Route path="settings/service" element={<ServiceSettings />} />
             <Route path="payments" element={<Payments />} />
             <Route path="audit-log" element={<AuditLog />} />
+            <Route path="kitchen" element={<KitchenQueue />} />
+            <Route path="kitchen/orders/:reference" element={<KitchenOrderAdmin />} />
+            <Route path="kitchen/menu" element={<KitchenMenu />} />
+            <Route path="kitchen/setup" element={<KitchenSetup />} />
             <Route path="settings" element={<Settings admin />} />
             <Route path="*" element={<NotFound />} />
           </Route>

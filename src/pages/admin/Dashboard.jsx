@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ErrorState, useAsync } from '../../components/common';
+import { KitchenOrderRow } from '../customer/kitchen/KitchenOrders';
 import Seo from '../../components/Seo';
 import { EmptyState, Spinner } from '../../components/ui';
 import { useAuth } from '../../context/AuthContext';
@@ -37,6 +38,23 @@ export default function AdminDashboard() {
             <Link to="/admin/bookings?scope=active" className="queue__item"><span>Shopping / delivering</span><strong>{data.queue.inProgress}</strong></Link>
             <Link to="/admin/payments" className={`queue__item${data.queue.openReconciliations ? ' is-hot' : ''}`}><span>Refunds &amp; balances</span><strong>{data.queue.openReconciliations}</strong></Link>
           </div>
+
+          {data.kitchen && (
+            <section className="card k-scope" style={{ marginBottom: 18 }}>
+              <header className="card__head"><h2>🍲 Jojo’s Kitchen</h2><Link to="/admin/kitchen" className="link-sm">Kitchen orders</Link></header>
+              <div className="queue">
+                <Link to="/admin/kitchen" className={`queue__item${data.kitchen.expressRequests ? ' is-hot' : ''}`}><span>Express to approve</span><strong>{data.kitchen.expressRequests}</strong></Link>
+                <Link to="/admin/kitchen" className="queue__item"><span>Awaiting payment</span><strong>{data.kitchen.awaitingPayment}</strong></Link>
+                <Link to="/admin/kitchen" className="queue__item"><span>To cook</span><strong>{data.kitchen.inKitchen}</strong></Link>
+                <Link to="/admin/kitchen" className="queue__item"><span>Out for delivery</span><strong>{data.kitchen.outForDelivery}</strong></Link>
+              </div>
+              {data.kitchen.today.length > 0 && (
+                <div className="k-order-list" style={{ marginTop: 12 }}>
+                  {data.kitchen.today.map((o) => <KitchenOrderRow key={o.reference} o={o} to={`/admin/kitchen/orders/${o.reference}`} />)}
+                </div>
+              )}
+            </section>
+          )}
 
           <div className="dash-grid">
             <section className="card card--span2">

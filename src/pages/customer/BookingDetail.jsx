@@ -51,7 +51,7 @@ function QuoteCard({ b, onAccept, onRevise, busy }) {
   );
 }
 
-function PaymentCard({ b, refresh, setError }) {
+export function PaymentCard({ b, refresh, setError, payApi = bookingApi, heldText = 'your booking is held for you', footer = 'Your booking is confirmed only when payment is verified — not just when you click.' }) {
   const [busy, setBusy] = useState('');
   const [note, setNote] = useState('');
   const pendingManual = b.payments.find((p) => p.provider === 'manual' && p.status === 'pending');
@@ -65,7 +65,7 @@ function PaymentCard({ b, refresh, setError }) {
       <header className="card__head"><h2>{b.amountDue.label || 'Payment'}</h2><strong className="big-money">{naira(b.amountDue.amount)}</strong></header>
       {pendingManual ? (
         <Alert tone="info" title="Transfer notice received">
-          You told us you sent {naira(pendingManual.amount)} ({pendingManual.payerNote}). Jojo will confirm once it reaches her account — your booking is held for you.
+          You told us you sent {naira(pendingManual.amount)} ({pendingManual.payerNote}). Jojo will confirm once it reaches her account — {heldText}.
         </Alert>
       ) : (
         <div className="pay-options">
@@ -73,7 +73,7 @@ function PaymentCard({ b, refresh, setError }) {
             <div className="pay-option">
               <strong>Use my Jojo Market credit</strong>
               <span className="muted small">Available: {naira(b.creditBalance)}</span>
-              <Button variant="secondary" className="btn--sm" loading={busy === 'credit'} onClick={() => run('credit', async () => { await bookingApi.payCredit(b.reference); await refresh(); })}>
+              <Button variant="secondary" className="btn--sm" loading={busy === 'credit'} onClick={() => run('credit', async () => { await payApi.payCredit(b.reference); await refresh(); })}>
                 Apply {naira(Math.min(b.creditBalance, b.amountDue.amount))}
               </Button>
             </div>
@@ -83,7 +83,7 @@ function PaymentCard({ b, refresh, setError }) {
               <strong>Pay online</strong>
               <span className="muted small">Card, bank transfer or USSD via Paystack.</span>
               <Button variant="accent" className="btn--sm" loading={busy === 'online'} onClick={() => run('online', async () => {
-                const { authorizationUrl } = await bookingApi.payOnline(b.reference);
+                const { authorizationUrl } = await payApi.payOnline(b.reference);
                 window.location.assign(authorizationUrl);
               })}>Pay {naira(b.amountDue.amount)}</Button>
             </div>
@@ -98,7 +98,7 @@ function PaymentCard({ b, refresh, setError }) {
                 ]} />
               ) : <p className="muted small">Jojo will share her account details with you directly.</p>}
               <p className="muted small">{b.manualPayment.instructions}</p>
-              <form className="inline-form" onSubmit={(e) => { e.preventDefault(); run('manual', async () => { await bookingApi.payManual(b.reference, note); setNote(''); await refresh(); }); }}>
+              <form className="inline-form" onSubmit={(e) => { e.preventDefault(); run('manual', async () => { await payApi.payManual(b.reference, note); setNote(''); await refresh(); }); }}>
                 <TextInput label="Name on the transfer or bank reference" value={note} onChange={(e) => setNote(e.target.value)} placeholder="e.g. ADA OBI — GTBank" />
                 <Button type="submit" variant="secondary" className="btn--sm" loading={busy === 'manual'} disabled={note.trim().length < 3}>I’ve sent the money</Button>
               </form>
@@ -106,7 +106,7 @@ function PaymentCard({ b, refresh, setError }) {
           )}
         </div>
       )}
-      <p className="muted small">Your booking is confirmed only when payment is verified — not just when you click.</p>
+      <p className="muted small">{footer}</p>
     </section>
   );
 }

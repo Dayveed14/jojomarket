@@ -1,3 +1,4 @@
+import { DishArt } from '../../components/kitchen/DishArt';
 import { Link, useLocation } from 'react-router-dom';
 import { ErrorState, useAsync } from '../../components/common';
 import Seo from '../../components/Seo';
@@ -55,6 +56,14 @@ export default function CustomerDashboard() {
               A quote to accept, a payment, or a question from Jojo. See below.
             </Alert>
           )}
+          <Link to="/app/kitchen" className="k-teaser">
+            <div>
+              <h2>Hungry? Jojo cooks too.</h2>
+              <p>Jollof, egusi, ofada, small chops and party trays — cooked fresh, your way, delivered.</p>
+              <span className="btn btn--accent btn--sm">Order from Jojo’s Kitchen</span>
+            </div>
+            <DishArt dish="jollof" steam />
+          </Link>
           <div className="stat-row">
             <div className="stat"><span className="stat__label">Active bookings</span><span className="stat__value">{data.counts.upcoming}</span></div>
             <div className={`stat${data.counts.waitingOnYou ? ' stat--orange' : ''}`}><span className="stat__label">Waiting on you</span><span className="stat__value">{data.counts.waitingOnYou}</span><span className="stat__hint">Quotes, payments &amp; approvals</span></div>

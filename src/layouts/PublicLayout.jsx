@@ -26,6 +26,7 @@ export default function PublicLayout() {
             <a href="/#services">Services</a>
             <a href="/#what-we-buy">What we buy</a>
             <Link to="/markets">Markets</Link>
+            <NavLink to="/kitchen" className="site-nav__kitchen">🍲 Jojo’s Kitchen</NavLink>
             <a href="/#faq">FAQ</a>
             <div className="site-nav__auth">
               {user ? (
@@ -58,6 +59,7 @@ export default function PublicLayout() {
               <li><a href="/#how-it-works">How it works</a></li>
               <li><a href="/#services">Full shopping &amp; sample runs</a></li>
               <li><Link to="/markets">Markets we shop</Link></li>
+              <li><Link to="/kitchen">Jojo’s Kitchen — cooked food</Link></li>
               <li><a href="/#faq">Questions</a></li>
             </ul>
           </div>
