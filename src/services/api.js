@@ -46,6 +46,11 @@ export function refreshSession() {
     refreshInFlight = (async () => {
       for (let attempt = 0; attempt < 2; attempt++) {
         const { res, data } = await rawRequest('/auth/refresh', { method: 'POST', auth: false });
+        if (res.status === 204) { // not signed in — nothing to restore
+          setAccessToken(null);
+          onSessionChange(null);
+          return null;
+        }
         if (res.ok) {
           setAccessToken(data.accessToken);
           onSessionChange(data.user);
